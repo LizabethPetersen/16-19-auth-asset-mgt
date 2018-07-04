@@ -4,7 +4,7 @@ import faker from 'faker';
 import { startServer, stopServer } from '../lib/server';
 import { createAccountMockPromise, removeAccountMockPromise } from './lib/account-mock';
 
-const apiUrl = `http://localhost/:${process.env.PORT}/api`;
+const apiUrl = `http://localhost:${process.env.PORT}/api`;
 
 describe('AUTH Router', () => {
   beforeAll(startServer);
@@ -15,7 +15,7 @@ describe('AUTH Router', () => {
     const mockAccount = {
       username: faker.internet.userName(),
       email: faker.internet.email(),
-      password: 'passwordIsABadPassword',
+      password: 'passwordIsPassword',
     };
     return superagent.post(`${apiUrl}/signup`)
       .send(mockAccount)
@@ -28,7 +28,7 @@ describe('AUTH Router', () => {
       });
   });
 
-  test('GET 200 to api/login for successful login and recipt of a token', () => {
+  test('GET 200 to api/login for successful login and receipt of a token', () => {
     return createAccountMockPromise()
       .then((mockData) => {
         return superagent.get(`${apiUrl}/login`)

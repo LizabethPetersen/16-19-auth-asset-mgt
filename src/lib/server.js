@@ -5,9 +5,9 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import logger from './logger';
 
-import errorMiddleWare from './middleware/error-middleware';
-import loggerMiddleware from './middleware/logger-middleware';
 
+import loggerMiddleware from './middleware/logger-middleware';
+import errorMiddleWare from './middleware/error-middleware';
 import authRouter from '../router/auth-router';
 
 const app = express();
@@ -20,13 +20,13 @@ app.use(express.json());
 
 app.use(loggerMiddleware);
 app.use(authRouter);
+app.use(errorMiddleWare);
 
 app.all('*', (request, response) => {
   console.log('Returning 404 from the catch-all route'); /* eslint-disable-line */
   return response.sendStatus(404).send('Route Not Registered');
 });
 
-app.use(errorMiddleWare);
 
 const startServer = () => {
   return mongoose.connect(process.env.MONGODB_URI)
