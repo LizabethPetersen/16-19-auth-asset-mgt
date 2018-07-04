@@ -1,22 +1,14 @@
-# DATA STRUCTURES AND ALGORITHMS TEMPLATE README
+# LAB 16 - AUTH-ASSET-MGT README
+
 ## Travis Badge
-<!-- YOUR TRAVIS CI BADGE HERE -->
-
-## Challenge
-<!-- YOUR PROBLEM DOMAIN HERE -->
-
-## Whiteboarding Solution:
- <!--YOUR GITHUB IMAGE URL BELOW  -->
-![alt text](YOUR-IMAGE-URL-HERE.jpg)
-
-## Code Solution
-<!-- YOUR CODE HERE -->
-
-<!-- ====================================================================== -->
-
-# LAB TEMPLATE README
-## Travis Badge
-<!-- YOUR TRAVIS CI BADGE HERE -->
+[![Build Status](https://travis-ci.org/LizabethPetersen/16-19-auth-asset-mgt.svg?branch=master)](https://travis-ci.org/LizabethPetersen/16-19-auth-asset-mgt)
 
 ## Code
-<!-- YOUR CODE DESCRIPTION HERE -->
+This is the structure for an account with basic authorization for signup and subsequent logins. Routes include POST and GET. 
+
+##### POST
+The Account Schema includes a username, email, and password as required fields, and upon POST, will create a new Account, with added token seed and created on date/time. The token seed will have a hash length of 64 and will use 4 rounds to generate this (in combination with the password).
+
+##### GET
+We can access an Account via a GET request using a correct username and password.
+
