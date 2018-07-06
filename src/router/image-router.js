@@ -52,15 +52,16 @@ imageRouter.get('/api/images/:id?', bearerAuthMiddleware, (request, response, ne
 
 imageRouter.delete('/api/images/:id?', bearerAuthMiddleware, (request, response, next) => {
   if (!request.account) return next(new HttpErrors(401, 'IMAGE ROUTER DELETE: invalid request'));
-  if (!request.params.key) return next(new HttpErrors(400, 'IMAGE ROUTER DELETE: no id provided'));
-
-  // how do we incorporate s3Remove to remove the item from AWS S3????
-  
-  return Image.findByIdAndRemove(request.params.id)
+  if (!request.params.key) return next(new HttpErrors(400, 'IMAGE ROUTER DELETE: no id provided'));  
+  return Image.findById(request.params.id)
     .then((image) => {
       if (!image) return next(new HttpErrors(404, 'IMAGE ROUTE DELETE: no image found'));
-      logger.log(logger.INFO, 'IMAGE ROUTER DELETE: successfully deleted image');
-      return response.sendStatus(204);
+      const key = image.fileName;
+      return s3Remove(key);
+    })
+    .then((result) => {
+      return response.json(result);
+      // logger.log(logger.INFO, 'IMAGE ROUTER DELETE: successfully deleted image');
     })
     .catch(next);
 });
