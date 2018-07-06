@@ -29,8 +29,8 @@ export default (error, request, response, next) => { /*eslint-disable-line*/
   }
 
   if (errorMessage.includes('unauthorized')) {
-    logger.log(logger.ERROR, `Responding with a 401 code ${errorMessage}`);
-    return response.sendStatus(401);
+    logger.log(logger.ERROR, `Responding with a 400 code ${errorMessage}`);
+    return response.sendStatus(400);
   }
 
   logger.log(logger.ERROR, `Responding with a 500 code ${JSON.stringify(error)}`);

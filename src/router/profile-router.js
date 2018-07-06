@@ -6,9 +6,8 @@ import logger from '../lib/logger';
 
 const profileRouter = new Router();
 
-profileRouter.post('api/profiles', bearerAuthMiddleware, (request, response, next) => {
-  if (!request.account) return next(new HttpErrors(400, 'POST Profile Router: Invalid Request'));
-
+profileRouter.post('/api/profiles', bearerAuthMiddleware, (request, response, next) => {
+  if (!request.account) return next(new HttpErrors(400, 'POST PROFILE ROUTER: Invalid Request'));
   Profile.init()
     .then(() => {
       return new Profile({
@@ -17,14 +16,15 @@ profileRouter.post('api/profiles', bearerAuthMiddleware, (request, response, nex
       }).save();
     })
     .then((profile) => {
-      logger.log(logger.INFO, `POST Profile Router: 200 for new Profile created, ${JSON.stringify(profile)}`);
+      logger.log(logger.INFO, `POST PROFILE ROUTER: 200 for new Profile created, ${JSON.stringify(profile)}`);
       return response.json(profile);
     })
     .catch(next);
+  return undefined;
 });
 
-profileRouter.get('api/profiles/:id?', bearerAuthMiddleware, (request, response, next) => {
-  if (!request.account) return next(new HttpErrors(401, 'GET Profile Router: 401 for invalid request'));
+profileRouter.get('/api/profiles/:id?', bearerAuthMiddleware, (request, response, next) => {
+  if (!request.account) return next(new HttpErrors(400, 'GET PROFILE ROUTER: 400s for invalid request'));
     
   if (!request.params._id) {
     return Profile.find({})

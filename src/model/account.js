@@ -38,7 +38,7 @@ accountSchema.methods.verifyPasswordPromise = function verifyPasswordPromise(pas
   return bcrypt.compare(password, this.passwordHash)
     .then((result) => {
       if (!result) {
-        throw new HttpErrors(401, 'ACCOUNT MODEL: incorrect data');
+        throw new HttpErrors(400, 'ACCOUNT MODEL: incorrect data');
       }
       return this;
     })
