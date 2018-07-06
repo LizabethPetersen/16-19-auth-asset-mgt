@@ -9,8 +9,8 @@ const apiUrl = `http://localhost:${process.env.PORT}/api/images`;
 
 describe('TESTING ROUTES AT /api/images', () => {
   let token;
+  let account;
   let image;
-  //  let account;
   beforeAll(startServer);
   afterAll(stopServer);
   beforeEach(async () => {
