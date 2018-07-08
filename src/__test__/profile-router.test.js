@@ -6,7 +6,7 @@ import { removeAllResources } from './lib/profile-mock';
 
 const apiUrl = `http://localhost:${process.env.PORT}}`;
 
-describe('Testing PROFILE ROUTER', () => {
+describe('TESTING PROFILE ROUTER', () => {
   let mockData;
   let token;
   let account;
@@ -40,10 +40,10 @@ describe('Testing PROFILE ROUTER', () => {
           .set('Authorization', `Bearer ${token}`)
           .send(mockProfile);
         expect(response.status).toEqual(200);
-        // expect(response.body.accountId).toEqual(account._id.toString());
-        // expect(response.body.firstName).toEqual(mockProfile.firstName);
-        // expect(response.body.lastName).toEqual(mockProfile.lastName);
-        // expect(response.body.bio).toEqual(mockProfile.bio);
+        expect(response.body.accountId).toEqual(account._id.toString());
+        expect(response.body.firstName).toEqual(mockProfile.firstName);
+        expect(response.body.lastName).toEqual(mockProfile.lastName);
+        expect(response.body.bio).toEqual(mockProfile.bio);
       } catch (err) {
         expect(err).toEqual('FOO');
       }

@@ -15,6 +15,7 @@ const createImageMockPromise = async () => {
     fileName: faker.system.fileName(),
     accountId: mockData.account._id,
   }).save();
+  console.log(image, 'THIS IS MY NEW IMAGE!!!!!!!!!!') /* NOTE THAT THIS WORKS—I AM SEEING MY IMAGE DATA */
   mockData.image = image;
   return mockData;
 };
