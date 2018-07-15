@@ -68,12 +68,12 @@ describe('TESTING IMAGE ROUTER AT /api/images', () => {
   describe('DELETE ROUTES to /api/images', () => {
     test('Send 202 for successful deletion of an image', async () => {
       try {
-        const response = await superagent.delete(`${apiUrl}/${image._id}`)
+        const response = await superagent.delete(`${apiUrl}/images/:id?`)
           .set('Authorization', `Bearer ${token}`);
         expect(response.status).toEqual(202);
       } catch (err) {
         console.log(err);  /* eslint-disable-line */
-        expect(err).toEqual('FAILING IN DELETE 204 REQUEST');
+        expect(err).toEqual('FAILING IN DELETE 202 REQUEST');
       }
     });
   });

@@ -50,23 +50,42 @@ imageRouter.get('/api/images/:id?', bearerAuthMiddleware, (request, response, ne
     .catch(next);
 });
 
-imageRouter.delete('/api/images/:id?', bearerAuthMiddleware, (request, response, next) => {
-  if (!request.account) return next(new HttpErrors(401, 'IMAGE ROUTER DELETE: invalid request'));
-  
-  if (!request.params._id) return next(new HttpErrors(400, 'IMAGE ROUTER DELETE: no id provided'));  
-  
-  return Image.findOne(request.params.key)
-    .then((image) => {
-      if (!image) return next(new HttpErrors(404, 'IMAGE ROUTE DELETE: no image found'));
-      const key = image.fileName;
-      return s3Remove(key);
-    })
-    .then((result) => {
-      return response.json(result);
-      // logger.log(logger.INFO, 'IMAGE ROUTER DELETE: successfully deleted image');
+// imageRouter.delete('/api/images/:id?', bearerAuthMiddleware, (request, response, next) => {
+// if (!request.account) return next(new HttpErrors(401, 'IMAGE ROUTER DELETE: invalid request'));
+// 
+// if (!request.params._id) return next(new HttpErrors(400, 'IMAGE ROUTER DELETE: no id provided'));  
+// 
+// return Image.findOne(request.params.image.fileName)
+// .then((image) => {
+// if (!image) return next(new HttpErrors(404, 'IMAGE ROUTE DELETE: no image found'));
+// const key = image.fileName;
+// return s3Remove(key);
+// })
+// .then((result) => {
+// return response.json(result);
+// logger.log(logger.INFO, 'IMAGE ROUTER DELETE: successfully deleted image');
+// })
+// .catch(next);
+// });
+
+imageRouter.delete('/api/items/:id?', bearerAuthMiddleware, (request, response, next) => {
+  if (!request.account) return next(new HttpErrors(400, 'DELETE REQUEST to ITEM ROUTER: 400 for invalid request'));
+
+  if (!request.params.id) {
+    return Image.find({})
+      .then((images) => {
+        response.json(images);
+      })
+      .catch(next);
+  }
+  const key = Image.fileName;
+
+  return s3Remove(key)
+    .then(() => {
+      logger.log(logger.INFO, `${request.params.id} deleted`);
+      return response.status(202).send('Image deleted');
     })
     .catch(next);
 });
-
 
 export default imageRouter;
