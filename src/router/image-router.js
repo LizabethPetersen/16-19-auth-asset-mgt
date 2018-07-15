@@ -3,7 +3,7 @@ import { Router } from 'express';
 import HttpErrors from 'http-errors';
 import bearerAuthMiddleware from '../lib/middleware/bearer-auth-middleware';
 import Image from '../model/image';
-import { s3Upload, s3Remove } from '../lib/s3';
+import { s3Upload, s3Remove } from '../lib/s3'; /* eslint-disable-line */
 import logger from '../lib/logger';
 
 const multerUpload = multer({ dest: `${__dirname}/../temp` });
@@ -22,7 +22,6 @@ imageRouter.post('/api/images', bearerAuthMiddleware, multerUpload.any(), (reque
   return s3Upload(file.path, key)
     .then((url) => {
       logger.log(logger.INFO, `IMAGE ROUTER POST: received a valid url from Amazon S3: ${url}`);
-      console.log(url, 'asldfjkdsl;fkjsdl;fad;lgjdl;kg valid but fake url returned from Amazon');
       return new Image({
         ...request.body,
         accountId: request.account._id,
@@ -46,44 +45,6 @@ imageRouter.get('/api/images/:id?', bearerAuthMiddleware, (request, response, ne
       if (!image) return next(new HttpErrors(404, 'IMAGE ROUTER GET: no image found'));
       logger.log(logger.INFO, `IMAGE ROUTER GET: successfully retrieved image: ${JSON.stringify(image, null, 2)}`);
       return response.json(image);
-    })
-    .catch(next);
-});
-
-// imageRouter.delete('/api/images/:id?', bearerAuthMiddleware, (request, response, next) => {
-// if (!request.account) return next(new HttpErrors(401, 'IMAGE ROUTER DELETE: invalid request'));
-// 
-// if (!request.params._id) return next(new HttpErrors(400, 'IMAGE ROUTER DELETE: no id provided'));  
-// 
-// return Image.findOne(request.params.image.fileName)
-// .then((image) => {
-// if (!image) return next(new HttpErrors(404, 'IMAGE ROUTE DELETE: no image found'));
-// const key = image.fileName;
-// return s3Remove(key);
-// })
-// .then((result) => {
-// return response.json(result);
-// logger.log(logger.INFO, 'IMAGE ROUTER DELETE: successfully deleted image');
-// })
-// .catch(next);
-// });
-
-imageRouter.delete('/api/items/:id?', bearerAuthMiddleware, (request, response, next) => {
-  if (!request.account) return next(new HttpErrors(400, 'DELETE REQUEST to ITEM ROUTER: 400 for invalid request'));
-
-  if (!request.params.id) {
-    return Image.find({})
-      .then((images) => {
-        response.json(images);
-      })
-      .catch(next);
-  }
-  const key = Image.fileName;
-
-  return s3Remove(key)
-    .then(() => {
-      logger.log(logger.INFO, `${request.params.id} deleted`);
-      return response.status(202).send('Image deleted');
     })
     .catch(next);
 });

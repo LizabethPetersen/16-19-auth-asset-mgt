@@ -16,7 +16,6 @@ const createImageMockPromise = async () => {
     accountId: mockData.account._id,
   }).save();
   mockData.image = image;
-  console.log(image, 'THIS IS MY NEW IMAGE!!!!!!!!!!'); /* NOTE THAT THIS WORKS—I AM SEEING MY IMAGE DATA */
   return mockData;
 };
 

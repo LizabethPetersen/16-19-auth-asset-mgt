@@ -38,7 +38,6 @@ describe('TESTING IMAGE ROUTER AT /api/images', () => {
         // expect(response.body.title).toEqual('yellow bench');
         // expect(response.body._id).toBeTruthy();
         // expect(response.body.url).toBeTruthy();
-        console.log(response, 'I AM ABLE TO GET TO MY ROUTE!!!!!!!!!');
       } catch (err) {
         console.log(err);  /* eslint-disable-line */
         expect(err).toEqual('foo');
@@ -62,19 +61,6 @@ describe('TESTING IMAGE ROUTER AT /api/images', () => {
         expect(err).toEqual('foo');
       }
       return undefined;
-    });
-  });
-
-  describe('DELETE ROUTES to /api/images', () => {
-    test('Send 202 for successful deletion of an image', async () => {
-      try {
-        const response = await superagent.delete(`${apiUrl}/images/:id?`)
-          .set('Authorization', `Bearer ${token}`);
-        expect(response.status).toEqual(202);
-      } catch (err) {
-        console.log(err);  /* eslint-disable-line */
-        expect(err).toEqual('FAILING IN DELETE 202 REQUEST');
-      }
     });
   });
 });
