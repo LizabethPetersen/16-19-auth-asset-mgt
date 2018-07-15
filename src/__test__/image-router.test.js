@@ -28,7 +28,7 @@ describe('TESTING IMAGE ROUTER AT /api/images', () => {
   });
 
   describe('POST IMAGE ROUTES to /api/images', () => {
-    test.only('POST 200', async () => {
+    test('POST 200', async () => {
       try {
         const response = await superagent.post(`${apiUrl}`)
           .set('Authorization', `Bearer ${token}`)
@@ -73,7 +73,7 @@ describe('TESTING IMAGE ROUTER AT /api/images', () => {
         expect(response.status).toEqual(202);
       } catch (err) {
         console.log(err);  /* eslint-disable-line */
-        expect(err).toEqual('FAILING IN GET 200 POST');
+        expect(err).toEqual('FAILING IN DELETE 204 REQUEST');
       }
     });
   });

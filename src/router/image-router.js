@@ -12,19 +12,19 @@ const imageRouter = new Router();
 
 imageRouter.post('/api/images', bearerAuthMiddleware, multerUpload.any(), (request, response, next) => {
   if (!request.account) return next(new HttpErrors(401, 'IMAGE ROUTER POST ERROR: not authorized'));
-  if (!request.body.title || !request.files.length < 1) {
+  const [file] = request.files;
+  if (!request.files) {
     return next(new HttpErrors(400, 'IMAGE ROUTER POST REQUEST: invalid request'));
   } 
 
-  const [file] = request.files;
-  logger.log(logger.INFO, `IMAGE ROUTER POST: valid file ready to upload: ${JSON.stringify(file, null, 2)}`);
+  const key = `${file.filename}.${file.originalname}`;
 
-  const key = `${file.fileName}.${file.originalname}`;
   return s3Upload(file.path, key)
     .then((url) => {
       logger.log(logger.INFO, `IMAGE ROUTER POST: received a valid url from Amazon S3: ${url}`);
+      console.log(url, 'asldfjkdsl;fkjsdl;fad;lgjdl;kg valid but fake url returned from Amazon');
       return new Image({
-        title: request.body.title,
+        ...request.body,
         accountId: request.account._id,
         fileName: key,
         url,
@@ -52,8 +52,10 @@ imageRouter.get('/api/images/:id?', bearerAuthMiddleware, (request, response, ne
 
 imageRouter.delete('/api/images/:id?', bearerAuthMiddleware, (request, response, next) => {
   if (!request.account) return next(new HttpErrors(401, 'IMAGE ROUTER DELETE: invalid request'));
-  if (!request.params.key) return next(new HttpErrors(400, 'IMAGE ROUTER DELETE: no id provided'));  
-  return Image.findById(request.params.id)
+  
+  if (!request.params._id) return next(new HttpErrors(400, 'IMAGE ROUTER DELETE: no id provided'));  
+  
+  return Image.findOne(request.params.key)
     .then((image) => {
       if (!image) return next(new HttpErrors(404, 'IMAGE ROUTE DELETE: no image found'));
       const key = image.fileName;

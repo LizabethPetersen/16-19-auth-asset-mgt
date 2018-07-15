@@ -10,13 +10,13 @@ const createImageMockPromise = async () => {
   mockData.account = mockAccountResponse.account;
   mockData.token = mockAccountResponse.token;
   const image = await new Image({
-    title: faker.lorem.words(2),
+    title: 'yellow bench',
     url: faker.random.image(),
     fileName: faker.system.fileName(),
     accountId: mockData.account._id,
   }).save();
-  console.log(image, 'THIS IS MY NEW IMAGE!!!!!!!!!!') /* NOTE THAT THIS WORKS—I AM SEEING MY IMAGE DATA */
   mockData.image = image;
+  console.log(image, 'THIS IS MY NEW IMAGE!!!!!!!!!!'); /* NOTE THAT THIS WORKS—I AM SEEING MY IMAGE DATA */
   return mockData;
 };
 
