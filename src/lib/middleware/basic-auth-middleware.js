@@ -6,7 +6,7 @@ import Account from '../../model/account';
 export default (request, response, next) => {
   if (!request.headers.authorization) return next(new HttpErrors(400, 'AUTH MIDDLEWARE - invalid request'));
 
-  const base64AuthHeader = request.headers.authorization.split('Basic')[1];
+  const base64AuthHeader = request.headers.authorization.split('Basic ')[1];
   if (!base64AuthHeader) return next(new HttpErrors(400, 'AUTH MIDDLEWARE - invalid request'));
   
   const stringAuthHeader = Buffer.from(base64AuthHeader, 'base64').toString();

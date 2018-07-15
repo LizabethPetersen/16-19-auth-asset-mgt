@@ -12,3 +12,6 @@ The Account Schema includes a username, email, and password as required fields, 
 ##### GET
 We can access an Account via a GET request using a correct username and password.
 
+##### DELETE
+We can delete images from the S3 bucket via their key (aka filepath).
+
