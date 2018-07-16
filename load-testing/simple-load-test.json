@@ -1,0 +1,27 @@
+{
+    "config": {
+      "target": "https://labworkcf.herokuapp.com/",
+      "phases": [
+        {
+          "duration": 2,
+          "arrivalRate": 10
+        }
+      ]
+    },
+    "scenarios": [
+      {
+        "flow": [
+          {
+            "post": {
+              "url": "/api/signup",
+              "json": {
+                "username": "liz",
+                "email": "liz@gmail.com",
+                "password": "mypassword"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }

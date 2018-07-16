@@ -15,3 +15,7 @@ We can access an Account via a GET request using a correct username and password
 ##### DELETE
 We can delete images from the S3 bucket via their key (aka filepath).
 
+### Load Testing Analysis
+[![Heroku Load Test Report]] (file:///Users/elizabethpetersen/codefellows:401/labs/16-19-auth-asset-mgt/heroku-report.json.html
+)
+
