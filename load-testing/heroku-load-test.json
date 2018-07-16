@@ -1,6 +1,6 @@
 {
     "config": {
-      "target": "https://aws-test-deployment.herokuapp.com",
+      "target": "https://labworkcf.herokuapp.com/",
       "http": {
         "tls": {
           "rejectUnauthorized": false
