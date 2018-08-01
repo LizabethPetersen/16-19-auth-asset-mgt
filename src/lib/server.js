@@ -16,7 +16,18 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 let server = null;
 
-app.use(cors());
+const corsOptions = {
+  origin: (origin, cb) => {
+    if (origin.includes(process.env.CORS_ORIGINS)) {
+      cb(null, true);
+    } else {
+      throw new Error(`${origin} not allowed by CORS`);
+    }
+  },
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

@@ -33,7 +33,7 @@ export default (error, request, response, next) => { /*eslint-disable-line*/
     return response.sendStatus(400);
   }
 
-  logger.log(logger.ERROR, `Responding with a 500 code ${JSON.stringify(error)}`);
-  console.log(`Responding with a 500 code ${error}`); /* eslint-disable-line */
+  logger.log(logger.ERROR, `Responding with a 500 code ${JSON.stringify(errorMessage)}`);
+  console.log(`Responding with a 500 code ${errorMessage}`); /* eslint-disable-line */
   return response.sendStatus(500);
 };
