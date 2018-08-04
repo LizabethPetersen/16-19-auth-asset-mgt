@@ -27,6 +27,7 @@ profileRouter.post('/api/profiles', bearerAuthMiddleware, (request, response, ne
 
 profileRouter.get('/api/profiles/me', bearerAuthMiddleware, (request, response, next) => {
   if (!request.account) return next(new HttpErrors(400, 'GET PROFILE ROUTER-AUTH: 400 for invalid request'));
+  
   return Profile.findOne({ accountId: request.account._id })
     .then((profile) => {
       if (!profile) return next(new HttpErrors(404, 'Not Found'));

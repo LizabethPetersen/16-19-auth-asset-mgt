@@ -8,7 +8,7 @@ const jwtVerify = promisify(jsonWebToken.verify);
 export default (request, response, next) => {
   if (!request.headers.authorization) return next(new HttpErrors(400, 'BEARER AUTH MIDDLEWARE: no headers auth'));
 
-  const token = request.headers.authorization.split('Bearer ')[1];
+  const token = request.headers.authorization.split(' ')[1];
   if (!token) return next(new HttpErrors(400, 'BEARER AUTH MIDDLEWARE: no token'));
   return jwtVerify(token, process.env.SECRET_KEY)
     .catch((error) => {
