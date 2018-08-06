@@ -31,6 +31,7 @@ profileRouter.get('/api/profiles/me', bearerAuthMiddleware, (request, response, 
   return Profile.findOne({ accountId: request.account._id })
     .then((profile) => {
       if (!profile) return next(new HttpErrors(404, 'Not Found'));
+      console.log(profile, 'RETURNING ONE PROFILE'); 
       return response.json(profile);
     })
     .catch(next);
@@ -41,6 +42,7 @@ profileRouter.get('/api/profiles/:id?', bearerAuthMiddleware, (request, response
   if (!request.params._id) {
     Profile.find({})
       .then((profiles) => {
+        console.log(profiles);
         return response.json(profiles);
       })
       .catch(next);

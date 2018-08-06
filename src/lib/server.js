@@ -39,6 +39,7 @@ app.use(imageRouter);
 app.use(googleOAuthRouter);
 
 app.use(errorMiddleWare);
+
 app.all('*', (request, response) => {
   console.log('Returning 404 from the catch-all route'); /* eslint-disable-line */
   return response.sendStatus(404).send('Route Not Registered');
