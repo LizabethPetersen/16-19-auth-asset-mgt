@@ -7,7 +7,7 @@ const logger = module.exports = winston.createLogger({
   format: winston.format.json(),
   transports: [
     new winston.transports.File({ filename: `${new Date().toDateString().replace(/ /g, '-')}.log`, level: 'verbose' }),
-    new winston.transports.Console({ format: winston.format.simple(), level: 'info' }),
+    // new winston.transports.Console({ format: winston.format.simple(), level: 'info' }),
   ],
 });
 
