@@ -7,11 +7,8 @@ import jsonWebToken from 'jsonwebtoken';
 import Account from '../model/account';
 import logger from '../lib/logger';
 
-// The below is a new url I generated
-const GOOGLE_OAUTH_URL = 'https://www.googleapis.com/oauth2/v3/token';
-
 // The below is the url from lecture code
-// const GOOGLE_OAUTH_URL = 'https://www.googleapis.com/oauth2/v4/token';
+const GOOGLE_OAUTH_URL = 'https://www.googleapis.com/oauth2/v4/token';
 const OPEN_ID_URL = 'https://www.googleapis.com/plus/v1/people/me/openIdConnect';
 
 require('dotenv').config();
@@ -56,7 +53,6 @@ googleOAuthRouter.get('/api/oauth/google', (request, response, next) => {
 
           return Account.findOne({ email })
             .then((foundAccount) => {
-              console.log(foundAccount, 'I FOUND MY ACCOUNT');
               if (!foundAccount) {
                 const username = email;
 
@@ -65,7 +61,6 @@ googleOAuthRouter.get('/api/oauth/google', (request, response, next) => {
                 return Account.create(username, email, secret)
                   .then((account) => {
                     account.tokenSeed = accessToken;
-                    console.log(account, 'THIS IS MY ACCOUNT');
                     return account.save();
                   })
                   .then((updatedAccount) => {
