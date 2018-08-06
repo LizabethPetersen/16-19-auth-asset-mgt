@@ -19,13 +19,16 @@ let server = null;
 
 const corsOptions = {
   origin: (origin, cb) => {
-    if (origin.includes(process.env.CORS_ORIGINS)) {
+    if (!origin) {
+      // assume Google API or Cypress
+      cb(null, true);
+    } else if (origin.includes(process.env.CORS_ORIGINS)) {
       cb(null, true);
     } else {
       throw new Error(`${origin} not allowed by CORS`);
     }
   },
-  credentials: true,
+  credentials: true, // Configures the Access-Control-Allow-Credentials CORS header. Set to true to pass the header, otherwise it is omitted.
 };
 
 app.use(cors(corsOptions));
