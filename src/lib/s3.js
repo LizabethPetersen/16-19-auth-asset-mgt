@@ -16,6 +16,7 @@ const s3Upload = (path, key) => {
     .promise()
     .then((response) => {
       logger.log(logger.INFO, `RECEIVED RESPONSE FROM AWS: ${JSON.stringify(response, null, 2)} `);
+      console.log(response, 'THIS IS THE RESPONSE');
       return fs.remove(path)
         .then(() => response.Location)
         .catch(Promise.reject);
